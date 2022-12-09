@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: white;
+      }
+
+      .container {
+        max-width: 1740px;
+        max-height: 1230px;
+        font-family: "Poppins";
+        font-size: 11px;
+        border: 2px solid black;
+      }
+      .header {
+        font-size: 30px;
+        border-bottom: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+      }
+
+      .header img {
+        height: 80px;
+      }
+      .awb,
+      .cod,
+      .service {
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid black;
+        padding: 3px 0px;
+      }
+
+      .order {
+        display: flex;
+        border-bottom: 1px solid black;
+      }
+
+      .order-left {
+        width: 50%;
+        border-right: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .order-right {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .order-item {
+        border-bottom: 1px solid black;
+        padding: 0px 20px;
+      }
+
+      .paket {
+        padding: 5px 20px;
+        border-bottom: 1px solid black;
+      }
+
+      .alamat {
+        padding: 5px 20px;
+        display: flex;
+        border-bottom: 1px solid black;
+        overflow-wrap: normal;
+      }
+
+      .alamat-sub {
+        flex: 1;
+      }
+
+      .footer {
+        padding: 5px 20px;
+        font-size: 10px;
+        font-style: italic;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="{{.StoreImage}}" alt="" />
+        <img src="{{.CourierImage}}" alt="" />
+      </div>
+
+      <div class="awb">
+        <svg id="barcode1"></svg>
+      </div>
+
+      <div class="service">
+        <span>Jenis Layanan : {{.CourierName}}</span>
+      </div>
+
+      <div class="order">
+        <div class="order-left"><svg id="barcode-order"></svg></div>
+        <div class="order-right">
+          <div class="order-item">COD : Rp. {{.Cod}}</div>
+          <div class="order-item">Asuransi : Rp. {{.Assurance}}</div>
+          <div class="order-item">Berat : {{.Weight}} gr</div>
+          <div class="order-item" style="border: 0px">
+            Quantity : {{.Qty}} Pcs
+          </div>
+        </div>
+      </div>
+
+      <div class="paket">
+        <p>Isi Paket : {{.ListProducts}}</p>
+      </div>
+
+      <div class="alamat">
+        <div class="alamat-sub">
+          <p>Penerima : {{.BuyerName}}</p>
+          <p>{{.BuyerAddress}}</p>
+        </div>
+        <div class="alamat-sub">
+          <p>Pengirim : {{.StoreName}}</p>
+          <p>{{.StoreAddress}}</p>
+        </div>
+      </div>
+
+      <div class="paket">
+        <p>Catatan : {{.Notes}}</p>
+      </div>
+
+      <div class="footer">
+        <p>*Pengirim wajib meminta bukti serah terima paket ke kurir</p>
+        <p>
+          *Jika paket ini retur, pengirim tetap dikenakan biaya keberangkatan
+          dan biaya retur sesuai ekspedisi
+        </p>
+      </div>
+    </div>
+
+    <script>
+      JsBarcode("#barcode1", "{{.BarcodeResi}}", {
+        fontSize: 15,
+        height: 50,
+        displayValue: true,
+      });
+      JsBarcode("#barcode-order", "{{.BarcodeIdOrder}}", {
+        fontSize: 15,
+        height: 30,
+        displayValue: true,
+      });
+    </script>
+  </body>
+</html>
